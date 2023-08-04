@@ -1,6 +1,7 @@
 package com.mitacs.customerjourney.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mitacs.customerjourney.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,9 @@ public class ShoppingOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate date;
-    private String status;
+    private OrderStatus status;
     @OneToMany
     private List<Item> orderItems;
-    @JsonIgnore
     @ManyToOne
     private Customer customer;
 }

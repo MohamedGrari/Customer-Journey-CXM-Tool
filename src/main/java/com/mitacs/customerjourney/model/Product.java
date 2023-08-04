@@ -12,16 +12,14 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class Product {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ref;
+    private String ref;
     private String name;
     private Float price;
     private String description;
     private String imageUrl;
-    @OneToOne
-    private Details details;
     @ManyToOne
-    private Category category;
+    private Brand brand;
 }

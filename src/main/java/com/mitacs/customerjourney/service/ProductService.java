@@ -14,11 +14,11 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    public Product findProductById(Long productId){
+    public Product findProductById(String productId){
         return repository.findById(productId).get();
     }
 
-    public List<Product> findProductsByCategory(Long categoryId) {
-        return repository.findProductsByCategoryId(categoryId);
-    }
+//    public List<Product> findProductsByCategory(Long categoryId) {
+//        return repository.findProductsByCategoryId(categoryId);
+//    }
 }

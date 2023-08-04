@@ -19,4 +19,6 @@ public class Cart {
     private Long id;
     @OneToMany
     private List<Item> cartItems;
+    @OneToOne
+    private Customer customer;
 }

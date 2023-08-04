@@ -17,12 +17,12 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping("/api/v1/products/{productId}")
-    public Product findProductById(@PathVariable Long productId) {
+    public Product findProductById(@PathVariable String productId) {
         return service.findProductById(productId);
     }
 
-    @GetMapping("/api/v1/categories/{categoryId}/products")
-    public List<Product> findProductsByCategory(@PathVariable Long categoryId) {
-        return service.findProductsByCategory(categoryId);
-    }
+//    @GetMapping("/api/v1/categories/{categoryId}/products")
+//    public List<Product> findProductsByCategory(@PathVariable Long categoryId) {
+//        return service.findProductsByCategory(categoryId);
+//    }
 }
