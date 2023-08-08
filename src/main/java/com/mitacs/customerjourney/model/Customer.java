@@ -28,4 +28,10 @@ public class Customer {
     @JsonIgnore
     @ManyToMany
     private Set<Product> targetedProducts;
+
+    public Customer(String email, String name, String adress) {
+        this.email = email;
+        this.name = name;
+        this.address = adress;
+    }
 }

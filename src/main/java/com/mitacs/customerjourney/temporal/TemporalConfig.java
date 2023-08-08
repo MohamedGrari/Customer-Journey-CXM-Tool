@@ -1,5 +1,6 @@
 package com.mitacs.customerjourney.temporal;
 
+import com.mitacs.customerjourney.service.FrontendClient;
 import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;
@@ -26,11 +27,12 @@ public class TemporalConfig {
     }
 
     @Bean
-    public Worker worker(WorkerFactory factory) {
+    public Worker worker(WorkerFactory factory, FrontendClient frontendClient) {
         String QUEUE_NAME = "TASKS";
         Worker worker = factory.newWorker(QUEUE_NAME);
         worker.registerWorkflowImplementationTypes(CustomerJourneyWorkflowImpl.class);
-//        worker.registerActivitiesImplementations(new RecommendProductActivityImpl(), new AddToCartActivityImpl());
+        worker.registerActivitiesImplementations(new ActivitiesImpl(frontendClient));
         return worker;
     }
+
 }
