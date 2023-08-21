@@ -40,7 +40,11 @@ public class CustomerService {
         } else {
             Cart cart = new Cart();
             cartRepository.save(cart);
-            Customer newCustomer = new Customer(loginInfo.getEmail(), getNewCustomerName(), "425 Rue de la Montagne", loginInfo.getPassword(), cart, new ArrayList<>(), new HashSet<>());
+            Customer newCustomer = new Customer(loginInfo.getEmail(), getNewCustomerName(), "425 Rue de la Montagne", loginInfo.getPassword(), loginInfo.getWorkflowId(), cart, new ArrayList<>(), new HashSet<>());
+            if (loginInfo.getWorkflowId() == null) {
+                UUID uuid = UUID.randomUUID();
+                newCustomer.setWorkflowId(uuid.toString());
+            }
             return Optional.of(repository.save(newCustomer));
         }
     }

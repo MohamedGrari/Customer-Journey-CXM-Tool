@@ -1,22 +1,14 @@
 package com.mitacs.customerjourney.temporal;
 
-import com.mitacs.customerjourney.model.Customer;
 import com.mitacs.customerjourney.temporal.payloads.ChatbotCommunicationInfo;
-import com.mitacs.customerjourney.temporal.payloads.CustomerInfo;
+import com.mitacs.customerjourney.temporal.payloads.WorkflowInfo;
 import com.mitacs.customerjourney.temporal.payloads.FavoriteProductInfo;
 import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
-import io.temporal.api.common.v1.WorkflowExecution;
-import io.temporal.api.common.v1.WorkflowExecutionOrBuilder;
 import io.temporal.client.WorkflowClient;
-import io.temporal.client.WorkflowException;
 import io.temporal.client.WorkflowOptions;
-import io.temporal.serviceclient.WorkflowServiceStubs;
-import io.temporal.workflow.ExternalWorkflowStub;
 import io.temporal.workflow.Workflow;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +20,10 @@ public class Controller {
 
     private String WORKFLOW_ID;
     private CustomerJourneyWorkflow workflow;
-    @PostMapping("/start-workflow")
-    public String startWorkflow(@RequestBody CustomerInfo customerInfo){
+    @PostMapping("/api/v1/start-workflow")
+    public String startWorkflow(@RequestBody WorkflowInfo workflowInfo){
 
-        WORKFLOW_ID = customerInfo.getCustomerId();
+        WORKFLOW_ID = workflowInfo.getWorkflowId();
         final String QUEUE_NAME = "TASKS";
 
         WorkflowOptions workflowOptions = WorkflowOptions.newBuilder()
@@ -40,7 +32,7 @@ public class Controller {
                 .build();
 
         workflow = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, workflowOptions);
-        workflow.executeCustomerJourney(customerInfo.getCustomerId());
+        workflow.executeCustomerJourney(workflowInfo.getWorkflowId());
         System.out.println(Workflow.getInfo().getWorkflowId());
         return "Workflow running with ID >>> " + WORKFLOW_ID;
     }

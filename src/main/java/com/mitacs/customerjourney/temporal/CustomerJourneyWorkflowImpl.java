@@ -17,7 +17,7 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
     ActivityOptions options = ActivityOptions.newBuilder()
             .setStartToCloseTimeout(Duration.ofSeconds(5))
             .build();
-    private String customerId;
+    private String workflowId;
     private Stage stage;
     private BrowsingType browsingType;
 
@@ -33,11 +33,11 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
 
 
     @Override
-    public void executeCustomerJourney(String customerId) {
+    public void executeCustomerJourney(String workflowId) {
         Workflow.sleep(Duration.ofSeconds(5));
         browsingType = BrowsingType.PLEASURE;
         stage = Stage.UNKNOWN;
-        this.customerId = customerId;
+        this.workflowId = workflowId;
         activities.inviteToSubscribe();
         Workflow.await(() -> customerHasSubscribed);
         System.out.println("the customer is subscribed ? " + subscriptionInfo.isSubscribed());
@@ -92,7 +92,7 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
     }
 
     @Override
-    public String getCustomerId() {
-        return customerId;
+    public String getWorkflowId() {
+        return workflowId;
     }
 }

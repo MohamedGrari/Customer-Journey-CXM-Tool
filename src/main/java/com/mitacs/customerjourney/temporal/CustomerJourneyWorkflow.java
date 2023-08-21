@@ -32,7 +32,7 @@ public interface CustomerJourneyWorkflow {
     BrowsingType getBrowsingType();
 
     @QueryMethod
-    String getCustomerId();
+    String getWorkflowId();
 
 
 }

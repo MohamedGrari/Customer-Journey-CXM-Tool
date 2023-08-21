@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerInfo {
-    private String customerId;
+public class WorkflowInfo {
+    private String workflowId;
     private boolean isLoggedIn = false;
 }
