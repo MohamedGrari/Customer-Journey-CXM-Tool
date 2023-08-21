@@ -29,9 +29,9 @@ public class Customer {
     @ManyToMany
     private Set<Product> targetedProducts;
 
-    public Customer(String email, String name, String adress) {
+    public Customer(String email, String name, String address) {
         this.email = email;
         this.name = name;
-        this.address = adress;
+        this.address = address;
     }
 }

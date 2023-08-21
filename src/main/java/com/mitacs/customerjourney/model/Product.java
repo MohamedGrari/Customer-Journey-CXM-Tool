@@ -12,12 +12,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Product {
     @Id
     private String ref;
     private String name;
     private Float price;
+    @Column(length = 10000)
     private String description;
     private String imageUrl;
     @ManyToOne

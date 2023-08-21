@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatbotCommunicationInfo {
-    private boolean isResponding;
     private boolean isTargeting;
     private Product targetedProduct;
 }

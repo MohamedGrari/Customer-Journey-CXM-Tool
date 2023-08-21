@@ -1,17 +1,15 @@
 package com.mitacs.customerjourney.temporal.payloads;
 
-import com.mitacs.customerjourney.model.Customer;
+import com.mitacs.customerjourney.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubscriptionInfo {
-    private boolean isSubscribed;
-    private Customer customer;
-    private String workflowId;
+public class FavoriteProductInfo {
+    private Product product;
 }

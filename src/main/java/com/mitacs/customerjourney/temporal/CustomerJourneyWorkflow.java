@@ -4,6 +4,7 @@ import com.mitacs.customerjourney.model.Customer;
 import com.mitacs.customerjourney.model.enums.BrowsingType;
 import com.mitacs.customerjourney.model.enums.Stage;
 import com.mitacs.customerjourney.temporal.payloads.ChatbotCommunicationInfo;
+import com.mitacs.customerjourney.temporal.payloads.FavoriteProductInfo;
 import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
 import io.temporal.workflow.QueryMethod;
 import io.temporal.workflow.SignalMethod;
@@ -21,6 +22,9 @@ public interface CustomerJourneyWorkflow {
 
     @SignalMethod
     void receiveChatbotCommunicationInfo(ChatbotCommunicationInfo chatbotCommunicationInfo);
+
+    @SignalMethod
+    void receiveFavoriteProductInfo(FavoriteProductInfo favoriteProductInfo);
     @QueryMethod
     Stage getStage();
 
@@ -29,5 +33,6 @@ public interface CustomerJourneyWorkflow {
 
     @QueryMethod
     String getCustomerId();
+
 
 }

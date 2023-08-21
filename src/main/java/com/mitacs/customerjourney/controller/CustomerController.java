@@ -1,13 +1,15 @@
 package com.mitacs.customerjourney.controller;
 
 import com.mitacs.customerjourney.model.Customer;
+import com.mitacs.customerjourney.model.payload.LoginInfo;
 import com.mitacs.customerjourney.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +24,12 @@ public class CustomerController {
     }
 
     @PostMapping("api/v1/auth/login")
-    public Optional<Customer> logIn(@RequestBody Customer customer){
-        return service.logIn(customer);
+    public Optional<Customer> logIn(@RequestBody LoginInfo loginInfo){
+        return service.logIn(loginInfo);
+    }
+
+    @GetMapping("api/v1/customers/{customerEmail}")
+    public Optional<Customer> getCustomer(@PathVariable String customerEmail){
+        return service.getCustomer(customerEmail);
     }
 }
