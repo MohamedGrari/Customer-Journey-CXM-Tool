@@ -26,22 +26,21 @@ public class Controller {
         WORKFLOW_ID = workflowInfo.getWorkflowId();
         final String QUEUE_NAME = "TASKS";
 
+        System.out.println("workflowInfo.isLoggedIN = " + workflowInfo.isLoggedIn());
+
+
         WorkflowOptions workflowOptions = WorkflowOptions.newBuilder()
                 .setWorkflowId(WORKFLOW_ID)
                 .setTaskQueue(QUEUE_NAME)
                 .build();
 
         workflow = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, workflowOptions);
-        workflow.executeCustomerJourney(workflowInfo.getWorkflowId());
-        System.out.println(Workflow.getInfo().getWorkflowId());
+        workflow.executeCustomerJourney(workflowInfo);
         return "Workflow running with ID >>> " + WORKFLOW_ID;
     }
     @PostMapping("/receive/subscription-info")
     public void receiveSubscriptionInfo(@RequestBody SubscriptionInfo subscriptionInfo){
-
         CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, subscriptionInfo.getWorkflowId());
-
-//        System.out.println(Workflow.getInfo().getWorkflowId());
         workflow1.receiveSubscriptionInfo(subscriptionInfo);
     }
 

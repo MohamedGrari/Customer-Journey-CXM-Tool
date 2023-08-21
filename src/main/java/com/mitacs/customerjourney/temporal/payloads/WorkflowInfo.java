@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WorkflowInfo {
     private String workflowId;
-    private boolean isLoggedIn = false;
+    private boolean isLoggedIn;
 }

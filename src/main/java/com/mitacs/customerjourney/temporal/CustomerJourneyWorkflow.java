@@ -6,6 +6,7 @@ import com.mitacs.customerjourney.model.enums.Stage;
 import com.mitacs.customerjourney.temporal.payloads.ChatbotCommunicationInfo;
 import com.mitacs.customerjourney.temporal.payloads.FavoriteProductInfo;
 import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
+import com.mitacs.customerjourney.temporal.payloads.WorkflowInfo;
 import io.temporal.workflow.QueryMethod;
 import io.temporal.workflow.SignalMethod;
 import io.temporal.workflow.WorkflowInterface;
@@ -15,7 +16,7 @@ import org.checkerframework.checker.guieffect.qual.SafeType;
 @WorkflowInterface
 public interface CustomerJourneyWorkflow {
     @WorkflowMethod
-    void executeCustomerJourney(String customerId);
+    void executeCustomerJourney(WorkflowInfo workflowInfo);
 
     @SignalMethod
     void receiveSubscriptionInfo(SubscriptionInfo subscriptionInfo);

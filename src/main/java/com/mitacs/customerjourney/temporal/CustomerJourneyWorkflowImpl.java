@@ -7,6 +7,7 @@ import com.mitacs.customerjourney.model.enums.Stage;
 import com.mitacs.customerjourney.temporal.payloads.ChatbotCommunicationInfo;
 import com.mitacs.customerjourney.temporal.payloads.FavoriteProductInfo;
 import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
+import com.mitacs.customerjourney.temporal.payloads.WorkflowInfo;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.workflow.Workflow;
 
@@ -33,14 +34,17 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
 
 
     @Override
-    public void executeCustomerJourney(String workflowId) {
+    public void executeCustomerJourney(WorkflowInfo workflowInfo) {
         Workflow.sleep(Duration.ofSeconds(5));
         browsingType = BrowsingType.PLEASURE;
         stage = Stage.UNKNOWN;
-        this.workflowId = workflowId;
-        activities.inviteToSubscribe();
-        Workflow.await(() -> customerHasSubscribed);
-        System.out.println("the customer is subscribed ? " + subscriptionInfo.isSubscribed());
+        this.workflowId = workflowInfo.getWorkflowId();
+        System.out.println("workflowInfo.isLoggedIN = " + workflowInfo.isLoggedIn());
+        if (!workflowInfo.isLoggedIn()) {
+            activities.inviteToSubscribe();
+            Workflow.await(() -> customerHasSubscribed);
+            System.out.println("the customer is subscribed ? " + subscriptionInfo.isSubscribed());
+        }
         Workflow.sleep(Duration.ofSeconds(5));
         stage = Stage.DESIRE;
         activities.communicateWithChatbot();
