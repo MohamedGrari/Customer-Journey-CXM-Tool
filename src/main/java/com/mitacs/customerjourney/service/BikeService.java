@@ -29,7 +29,4 @@ public class BikeService {
         return repository.findBikesByBikeType(type);
     }
 
-    //    public List<Product> findProductsByCategory(Long categoryId) {
-//        return repository.findProductsByCategoryId(categoryId);
-//    }
 }

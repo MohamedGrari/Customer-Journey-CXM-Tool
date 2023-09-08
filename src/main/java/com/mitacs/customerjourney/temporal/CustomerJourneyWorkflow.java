@@ -1,17 +1,12 @@
 package com.mitacs.customerjourney.temporal;
 
-import com.mitacs.customerjourney.model.Customer;
 import com.mitacs.customerjourney.model.enums.BrowsingType;
 import com.mitacs.customerjourney.model.enums.Stage;
-import com.mitacs.customerjourney.temporal.payloads.ChatbotCommunicationInfo;
-import com.mitacs.customerjourney.temporal.payloads.FavoriteProductInfo;
-import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
-import com.mitacs.customerjourney.temporal.payloads.WorkflowInfo;
+import com.mitacs.customerjourney.temporal.payloads.*;
 import io.temporal.workflow.QueryMethod;
 import io.temporal.workflow.SignalMethod;
 import io.temporal.workflow.WorkflowInterface;
 import io.temporal.workflow.WorkflowMethod;
-import org.checkerframework.checker.guieffect.qual.SafeType;
 
 @WorkflowInterface
 public interface CustomerJourneyWorkflow {
@@ -20,12 +15,15 @@ public interface CustomerJourneyWorkflow {
 
     @SignalMethod
     void receiveSubscriptionInfo(SubscriptionInfo subscriptionInfo);
+//
+//    @SignalMethod
+//    void receiveChatbotCommunicationInfo(ChatbotCommunicationInfo chatbotCommunicationInfo);
+//
+//    @SignalMethod
+//    void receiveFavoriteProductInfo(FavoriteProductInfo favoriteProductInfo);
 
     @SignalMethod
-    void receiveChatbotCommunicationInfo(ChatbotCommunicationInfo chatbotCommunicationInfo);
-
-    @SignalMethod
-    void receiveFavoriteProductInfo(FavoriteProductInfo favoriteProductInfo);
+    void receiveTargetedProduct(TargetedProductInfo targetedProductInfo);
     @QueryMethod
     Stage getStage();
 
