@@ -3,12 +3,10 @@ package com.mitacs.customerjourney.controller;
 import com.mitacs.customerjourney.model.Bike;
 import com.mitacs.customerjourney.model.enums.BikeType;
 import com.mitacs.customerjourney.service.BikeService;
+import com.mitacs.customerjourney.temporal.payloads.TargetedProductInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

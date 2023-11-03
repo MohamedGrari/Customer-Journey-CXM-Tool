@@ -22,6 +22,7 @@ public class Controller {
     public String startWorkflow(@RequestBody WorkflowInfo workflowInfo){
 
         WORKFLOW_ID = workflowInfo.getWorkflowId();
+        System.out.println("workflowId = " + workflowInfo.getWorkflowId());
         final String QUEUE_NAME = "TASKS";
 
         System.out.println("workflowInfo.isLoggedIN = " + workflowInfo.isLoggedIn());
@@ -32,6 +33,7 @@ public class Controller {
                 .build();
 
         workflow = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, workflowOptions);
+        System.out.println("wselna l lehna");
         workflow.executeCustomerJourney(workflowInfo);
         return "Workflow running with ID >>> " + WORKFLOW_ID;
     }

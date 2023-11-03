@@ -39,6 +39,7 @@ public class CustomerService {
     public Optional<Customer> logIn(LoginInfo loginInfo){
         Optional<Customer> customer = repository.findById(loginInfo.getEmail());
         if (customer.isPresent() && customer.get().getPassword().equals(loginInfo.getPassword())){
+            System.out.println(loginInfo.getWorkflowId());
             CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, loginInfo.getWorkflowId());
             SubscriptionInfo subscriptionInfo = new SubscriptionInfo(true, customer.get(), loginInfo.getWorkflowId());
             workflow1.receiveSubscriptionInfo(subscriptionInfo);

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Product {
+public class Product {
     @Id
     private String ref;
     private String name;

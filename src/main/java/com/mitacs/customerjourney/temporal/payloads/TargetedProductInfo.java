@@ -14,4 +14,5 @@ import lombok.Setter;
 public class TargetedProductInfo {
     private TargetedProduct targetedProduct;
     private ProductType productType;
+    private String workflowId;
 }

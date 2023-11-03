@@ -23,7 +23,7 @@ public class ShoppingOrder {
     private LocalDate date;
     private OrderStatus status;
     @OneToMany
-    private List<Item> orderItems;
+    private List<Product> products;
     @ManyToOne
     private Customer customer;
 }

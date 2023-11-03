@@ -33,7 +33,6 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
         browsingType = BrowsingType.PLEASURE;
         stage = Stage.UNKNOWN;
         this.workflowId = workflowInfo.getWorkflowId();
-        System.out.println("workflowInfo.isLoggedIN = " + workflowInfo.isLoggedIn());
         if (!workflowInfo.isLoggedIn()) {
             activities.inviteToSubscribe();
 //            Workflow.await(() -> customerHasSubscribed);
