@@ -16,12 +16,9 @@ public class FrontendClient {
         this.messagingTemplate = messagingTemplate;
     }
 
+    // TODO Handle the websocket connection by adding the workflow id to the topic to prevent broadcasting
     public void sendMessage(Message message) throws Exception {
         this.messagingTemplate.convertAndSend("/topic/message", message.toString());
         System.out.println("Message: " + message + " has been sent successfully");
-    }
-
-    public void sendRecommendedProducts(List<Product> recommendedProducts) {
-        System.out.println("Message: Recommended products have been sent successfully");
     }
 }

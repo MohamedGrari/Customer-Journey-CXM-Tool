@@ -32,4 +32,9 @@ public class CustomerController {
     public Optional<Customer> getCustomer(@PathVariable String customerEmail){
         return service.getCustomer(customerEmail);
     }
+
+    @GetMapping("customers/{workflowId}")
+    public Optional<Customer> getCustomerByWorkflowId(@PathVariable String workflowId){
+        return service.getCustomerByWorkflowId(workflowId);
+    }
 }

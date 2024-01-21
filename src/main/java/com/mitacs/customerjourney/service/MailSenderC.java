@@ -28,10 +28,8 @@ public class MailSenderC {
             StringBuilder msgBody = new StringBuilder();
             msgBody.append("<html><body>");
 
-            // Add a greeting
             msgBody.append("<h2>Hello ").append(customer.getName()).append(",</h2>");
 
-            // Add a message
             msgBody.append("<p>Here are some recommended bikes:</p>");
 
             // Create a list of bikes with links to buy each bike
@@ -45,10 +43,12 @@ public class MailSenderC {
                 msgBody.append("</li>");
             }
 
-            // Add a closing message
+            msgBody.append("<p>If you sre hesitated or you have any question, feel free to schedule an appointment with us by clicking to this ");
+            msgBody.append("<a href='http://localhost:4200/appointment").append("'>link</a>");
+            msgBody.append(" We will be happy to meet you!</p>");
+
             msgBody.append("<p>Thank you for choosing our products!</p>");
 
-            // Close HTML
             msgBody.append("</body></html>");
 
             // Create a MimeMessage with HTML content

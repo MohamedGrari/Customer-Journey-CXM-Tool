@@ -13,4 +13,5 @@ public class LoginInfo {
     private String email;
     private String password;
     private String workflowId;
+    private boolean loggedIn;
 }

@@ -1,10 +1,8 @@
 package com.mitacs.customerjourney.temporal;
 
 import com.mitacs.customerjourney.model.Customer;
-import com.mitacs.customerjourney.model.Product;
 import com.mitacs.customerjourney.model.enums.BrowsingType;
 import com.mitacs.customerjourney.model.enums.Stage;
-import com.mitacs.customerjourney.model.payload.LoginInfo;
 import com.mitacs.customerjourney.temporal.payloads.*;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.workflow.Workflow;
@@ -20,6 +18,9 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
     private Stage stage;
     private BrowsingType browsingType;
     private boolean isSubscribed;
+    private boolean itemAddedToCart;
+    private boolean anAppointmentHasBeenScheduled;
+    private boolean purchaseProceeded;
 
     private final Activities activities = Workflow.newActivityStub(Activities.class, options);
     private Customer customer;
@@ -29,28 +30,25 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
 
     @Override
     public void executeCustomerJourney(WorkflowInfo workflowInfo) {
-        Workflow.sleep(Duration.ofSeconds(5));
         browsingType = BrowsingType.PLEASURE;
         stage = Stage.UNKNOWN;
         this.workflowId = workflowInfo.getWorkflowId();
+        Workflow.sleep(Duration.ofSeconds(5));
         if (!workflowInfo.isLoggedIn()) {
             activities.inviteToSubscribe();
-//            Workflow.await(() -> customerHasSubscribed);
-//            System.out.println("the customer is subscribed ? " + subscriptionInfo.isSubscribed());
         }
         Workflow.sleep(Duration.ofSeconds(10));
         stage = Stage.DESIRE;
         activities.communicateWithChatbot();
-        Workflow.await(() -> (aProductHasBeenTargeted));
+        Workflow.await(() -> (aProductHasBeenTargeted || itemAddedToCart));
         stage = Stage.INTENTION;
-//        boolean isFirstTimeWithProduct = true;
-//        if (isSubscribed)
-//            isFirstTimeWithProduct = activities.isNewPurchaseCheck(targetedProduct, customer);
-//        if (isFirstTimeWithProduct){
-        activities.recommendProducts(targetedProductInfo);
-//        } else {
-//            activities.recommendPersonalisedProducts(targetedProduct, customer);
-//        }
+        if (aProductHasBeenTargeted)
+            activities.recommendProducts(targetedProductInfo);
+        Workflow.await(() -> (itemAddedToCart || anAppointmentHasBeenScheduled));
+        stage = Stage.TRYING;
+        Workflow.await(() -> (purchaseProceeded));
+        stage = Stage.PURCHASE;
+        System.out.println("Customer Journey Completed!");
 
     }
 
@@ -82,6 +80,24 @@ public class CustomerJourneyWorkflowImpl implements CustomerJourneyWorkflow{
         System.out.println("Targeted Product Info received!");
         this.targetedProductInfo = targetedProductInfo;
         this.aProductHasBeenTargeted = true;
+    }
+
+    @Override
+    public void receiveItemAddedToCart() {
+        System.out.println("Item get Added to the Cart!");
+        this.itemAddedToCart = true;
+    }
+
+    @Override
+        public void receiveAppointmentInfo() {
+        System.out.println("Appointment info received!");
+        anAppointmentHasBeenScheduled = true;
+    }
+
+    @Override
+    public void receivePurchaseProceeded() {
+        System.out.println("Purchase Proceeded successfully!");
+        this.purchaseProceeded = true;
     }
 
     @Override

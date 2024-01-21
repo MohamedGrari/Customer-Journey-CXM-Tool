@@ -24,6 +24,15 @@ public interface CustomerJourneyWorkflow {
 
     @SignalMethod
     void receiveTargetedProduct(TargetedProductInfo targetedProductInfo);
+
+    @SignalMethod
+    void receiveItemAddedToCart();
+
+    @SignalMethod
+    void receiveAppointmentInfo();
+
+    @SignalMethod
+    void receivePurchaseProceeded();
     @QueryMethod
     Stage getStage();
 

@@ -3,6 +3,7 @@ package com.mitacs.customerjourney.controller;
 import com.mitacs.customerjourney.model.Cart;
 import com.mitacs.customerjourney.model.Product;
 import com.mitacs.customerjourney.service.CartService;
+import com.mitacs.customerjourney.temporal.payloads.CartInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class CartController {
     }
 
     @PostMapping("/{cartId}/addProduct")
-    public ResponseEntity<Cart> addProductToCart(@PathVariable Long cartId, @RequestBody Product product) {
-        Cart updatedCart = cartService.addToCart(product, cartId);
+    public ResponseEntity<Cart> addProductToCart(@PathVariable Long cartId, @RequestBody CartInfo cartInfo) {
+        Cart updatedCart = cartService.addToCart(cartInfo, cartId);
         return ResponseEntity.ok(updatedCart);
     }
 
     @PutMapping("/{cartId}/reset")
-    public void addProductToCart(@PathVariable Long cartId) {
-        cartService.resetCart(cartId);
+    public void resetCart(@PathVariable Long cartId, @RequestBody String workflowId) {
+        cartService.resetCart(cartId, workflowId);
     }
 
     @GetMapping("/{cartId}")

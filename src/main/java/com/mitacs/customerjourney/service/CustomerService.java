@@ -7,7 +7,12 @@ import com.mitacs.customerjourney.repository.CartRepository;
 import com.mitacs.customerjourney.repository.CustomerRepository;
 import com.mitacs.customerjourney.temporal.CustomerJourneyWorkflow;
 import com.mitacs.customerjourney.temporal.payloads.SubscriptionInfo;
+import io.temporal.api.enums.v1.WorkflowExecutionStatus;
+import io.temporal.api.workflowservice.v1.DescribeWorkflowExecutionRequest;
+import io.temporal.api.workflowservice.v1.DescribeWorkflowExecutionResponse;
+import io.temporal.api.workflowservice.v1.TerminateWorkflowExecutionRequest;
 import io.temporal.client.WorkflowClient;
+import io.temporal.client.WorkflowStub;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +43,19 @@ public class CustomerService {
 
     public Optional<Customer> logIn(LoginInfo loginInfo){
         Optional<Customer> customer = repository.findById(loginInfo.getEmail());
+
         if (customer.isPresent() && customer.get().getPassword().equals(loginInfo.getPassword())){
-            System.out.println(loginInfo.getWorkflowId());
             CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, loginInfo.getWorkflowId());
             SubscriptionInfo subscriptionInfo = new SubscriptionInfo(true, customer.get(), loginInfo.getWorkflowId());
             workflow1.receiveSubscriptionInfo(subscriptionInfo);
+
+
+            if (!loginInfo.isLoggedIn()) {
+                WorkflowStub workflow = workflowClient.newUntypedWorkflowStub(loginInfo.getWorkflowId());
+                workflow.cancel();
+                workflow.terminate("testtt");
+            }
+
             return customer;
         } else if (customer.isPresent()) {
             return Optional.empty();
@@ -81,5 +94,9 @@ public class CustomerService {
 
     public Optional<Customer> getCustomer(String customerEmail) {
         return repository.findById(customerEmail);
+    }
+
+    public Optional<Customer> getCustomerByWorkflowId(String workflowId) {
+        return repository.findByWorkflowId(workflowId);
     }
 }

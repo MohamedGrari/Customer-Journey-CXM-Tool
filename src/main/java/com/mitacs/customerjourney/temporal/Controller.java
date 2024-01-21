@@ -33,29 +33,20 @@ public class Controller {
                 .build();
 
         workflow = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, workflowOptions);
-        System.out.println("wselna l lehna");
         workflow.executeCustomerJourney(workflowInfo);
         return "Workflow running with ID >>> " + WORKFLOW_ID;
     }
-//    @PostMapping("/receive/subscription-info")
-//    public void receiveSubscriptionInfo(@RequestBody SubscriptionInfo subscriptionInfo){
-//        CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, subscriptionInfo.getWorkflowId());
-//        workflow1.receiveSubscriptionInfo(subscriptionInfo);
-//    }
-
-//    @PostMapping("/receive/chatbot-communication-info")
-//    public void receiveChatbotCommunicationInfo(@RequestBody ChatbotCommunicationInfo chatbotCommunicationInfo){
-//        workflow.receiveChatbotCommunicationInfo(chatbotCommunicationInfo);
-//    }
-//
-//    @PostMapping("/receive/favorite-product-info")
-//    public void receiveChatbotCommunicationInfo(@RequestBody FavoriteProductInfo favoriteProductInfo){
-//        workflow.receiveFavoriteProductInfo(favoriteProductInfo);
-//    }
 
     @PostMapping("/api/v1/receive/targeted-product-info")
     public void receiveTargetedProductInfo(@RequestBody TargetedProductInfo targetedProductInfo){
-        workflow.receiveTargetedProduct(targetedProductInfo);
+        CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, targetedProductInfo.getWorkflowId());
+        workflow1.receiveTargetedProduct(targetedProductInfo);
+    }
+
+    @PostMapping("/api/v1/receive/appointment-info")
+    public void receiveAppointmentInfo(@RequestBody String workflowId){
+        CustomerJourneyWorkflow workflow1 = workflowClient.newWorkflowStub(CustomerJourneyWorkflow.class, workflowId);
+        workflow1.receiveAppointmentInfo();
     }
 
 }
